@@ -1,5 +1,6 @@
 use crate::credentials::{Application, ApplicationError};
 use crate::oidc::discovery::{discover, DiscoveryError};
+use base64::{engine::general_purpose, Engine as _};
 use custom_error::custom_error;
 use jsonwebtoken::jwk::{AlgorithmParameters, JwkSet};
 use jsonwebtoken::{decode, decode_header, Algorithm, DecodingKey, Header, TokenData, Validation};
@@ -186,7 +187,7 @@ fn headers(auth: &AuthorityAuthentication) -> HeaderMap {
                 AUTHORIZATION,
                 format!(
                     "Basic {}",
-                    base64::encode(&format!("{}:{}", client_id, client_secret))
+                    general_purpose::STANDARD.encode(format!("{}:{}", client_id, client_secret))
                 )
                 .parse()
                 .unwrap(),
@@ -327,7 +328,7 @@ fn decode_metadata(response: &mut ZitadelIntrospectionResponse) -> Result<(), In
         let mut extra: ZitadelIntrospectionExtraTokenFields = response.extra_fields().clone();
         let mut metadata = HashMap::new();
         for (k, v) in h {
-            let decoded_v = base64::decode(v)
+            let decoded_v = general_purpose::STANDARD.decode(v)
                 .map_err(|source| IntrospectionError::DecodeResponse { source })?;
             let decoded_v = String::from_utf8_lossy(&decoded_v).into_owned();
             metadata.insert(k.clone(), decoded_v);

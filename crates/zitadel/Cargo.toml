@@ -79,13 +79,13 @@ introspection_cache = ["dep:async-trait", "dep:time", "dep:moka"]
 ## The OIDC module enables basic OIDC (OpenID Connect) features to communicate
 ## with ZITADEL. Two examples are the `discover` and `introspect` functions.
 ## The OIDC features are required for some of the web framework features.
-oidc = ["credentials", "dep:base64-compat"]
+oidc = ["credentials", "dep:base64"]
 
 [dependencies]
 async-trait = { version = "0.1.80", optional = true }
 axum = { version = "0.8.8", optional = true, features = ["macros"] }
 axum-extra = { version = "0.12.5", optional = true, features = ["typed-header"] }
-base64-compat = { version = "1", optional = true }
+base64 = { version = "0.22", optional = true }
 custom_error = "1.9.2"
 document-features = { version = "0.2.8", optional = true }
 jsonwebtoken = { version = "9.3.0", optional = true }
