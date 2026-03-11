@@ -1,4 +1,3 @@
-use custom_error::custom_error;
 use jsonwebtoken::{encode, Algorithm, EncodingKey, Header};
 use openidconnect::{
     core::{CoreProviderMetadata, CoreTokenType},
@@ -20,7 +19,8 @@ use crate::credentials::jwt::JwtClaims;
 /// provider for a gRPC service client.
 ///
 /// The service account can be used with the provided access rights in ZITADEL. If you
-/// want to use the ZITADEL API itself (for example to manage organizations) TODO: sicher?
+/// want to use the ZITADEL API itself (for example to manage organizations), set
+/// [`api_access`](AuthenticationOptions::api_access) to `true` when authenticating.
 ///
 /// To create a service account json, head over to your ZITADEL console
 /// and execute the following steps:
@@ -63,19 +63,35 @@ pub struct AuthenticationOptions {
     pub project_audiences: Vec<String>,
 }
 
-custom_error! {
-    /// Error type for service account related errors.
-    pub ServiceAccountError
-        Io{source: std::io::Error} = "unable to read from file: {source}",
-        Json{source: serde_json::Error} = "could not parse json: {source}",
-        Key{source: jsonwebtoken::errors::Error} = "could not parse RSA key: {source}",
-        AudienceUrl{source: openidconnect::url::ParseError} = "audience url could not be parsed: {source}",
-        DiscoveryError{source: Box<dyn std::error::Error>} = "could not discover OIDC document: {source}",
-        TokenEndpointMissing = "OIDC document does not contain token endpoint",
-        HttpError{source: openidconnect::reqwest::Error} = "http error: {source}",
-        UrlEncodeError = "could not encode url params for token request",
-        TokenError = "could not fetch token from endpoint",
-        AccessTokenMissing = "token response does not contain access token",
+/// Error type for service account related errors.
+#[derive(Debug, thiserror::Error)]
+pub enum ServiceAccountError {
+    #[error("unable to read from file: {source}")]
+    Io { source: std::io::Error },
+    #[error("could not parse json: {source}")]
+    Json { source: serde_json::Error },
+    #[error("could not parse RSA key: {source}")]
+    Key {
+        #[from]
+        source: jsonwebtoken::errors::Error,
+    },
+    #[error("audience url could not be parsed: {source}")]
+    AudienceUrl { source: openidconnect::url::ParseError },
+    #[error("could not discover OIDC document: {source}")]
+    DiscoveryError { source: Box<dyn std::error::Error> },
+    #[error("OIDC document does not contain token endpoint")]
+    TokenEndpointMissing,
+    #[error("http error: {source}")]
+    HttpError {
+        #[from]
+        source: openidconnect::reqwest::Error,
+    },
+    #[error("could not encode url params for token request")]
+    UrlEncodeError,
+    #[error("could not fetch token from endpoint")]
+    TokenError,
+    #[error("token response does not contain access token")]
+    AccessTokenMissing,
 }
 
 impl ServiceAccount {

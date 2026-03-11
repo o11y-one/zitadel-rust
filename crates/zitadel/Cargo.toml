@@ -104,7 +104,7 @@ async-trait = { version = "0.1.80", optional = true }
 axum = { version = "0.8.8", optional = true, features = ["macros"] }
 axum-extra = { version = "0.12.5", optional = true, features = ["typed-header"] }
 base64 = { version = "0.22", optional = true }
-custom_error = "1.9.2"
+thiserror = "2"
 document-features = { version = "0.2.8", optional = true }
 jsonwebtoken = { version = "10.3", features = ["rust_crypto"], optional = true }
 moka = { version = "0.12.14", features = ["future"], optional = true }

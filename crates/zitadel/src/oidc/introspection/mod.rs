@@ -1,7 +1,6 @@
 use crate::credentials::{Application, ApplicationError};
 use crate::oidc::discovery::{discover, DiscoveryError};
 use base64::{engine::general_purpose, Engine as _};
-use custom_error::custom_error;
 use jsonwebtoken::jwk::{AlgorithmParameters, JwkSet};
 use jsonwebtoken::{decode, decode_header, Algorithm, DecodingKey, Header, TokenData, Validation};
 use openidconnect::url::{ParseError, Url};
@@ -19,26 +18,43 @@ use std::str::FromStr;
 #[cfg(feature = "introspection_cache")]
 pub mod cache;
 
-custom_error! {
-    /// Error type for introspection related errors.
-    pub IntrospectionError
-        HttpClientError{source: reqwest::Error} = "could not create http client: {source}",
-        RequestFailed{origin: String, source: openidconnect::reqwest::Error} = "{origin} request did fail: {source}",
-        PayloadSerialization = "could not correctly serialize introspection payload",
-        JWTProfile{source: ApplicationError} = "could not create signed jwt key: {source}",
-        ParseUrl{source: ParseError} = "could not parse url: {source}",
-        ParseResponse{source: serde_json::Error} = "could not parse introspection response: {source}",
-        DecodeResponse{source: base64::DecodeError} = "could not decode base64 metadata: {source}",
-        ResponseError{source: ZitadelResponseError} = "received error response from Zitadel: {source}",
-        DiscoveryError{source: DiscoveryError} = "Discovery error during introspection: {source}",
-        JWTUnsupportedAlgorithm = "unsupported algorithm in JWT",
-        MissingJwksKey = "missing key in jwks",
-        JsonWebTokenErrors{source: jsonwebtoken::errors::Error} = @{ match source.kind() {
-            jsonwebtoken::errors::ErrorKind::InvalidToken => "Invalid JWT string, missing the 3 . segments, JKWS validation won't work with opaque tokens, make sure you've switched to JWT tokens or use instead the instropect method",
-            jsonwebtoken::errors::ErrorKind::InvalidAlgorithmName => "Invalid Algorithm in JWKS",
-            _ => "Other JWT error"
-        }},
-
+/// Error type for introspection related errors.
+#[derive(Debug, thiserror::Error)]
+pub enum IntrospectionError {
+    #[error("could not create http client: {source}")]
+    HttpClientError {
+        #[from]
+        source: reqwest::Error,
+    },
+    #[error("{origin} request did fail: {source}")]
+    RequestFailed { origin: String, source: openidconnect::reqwest::Error },
+    #[error("could not correctly serialize introspection payload")]
+    PayloadSerialization,
+    #[error("could not create signed jwt key: {source}")]
+    JWTProfile { source: ApplicationError },
+    #[error("could not parse url: {source}")]
+    ParseUrl { source: ParseError },
+    #[error("could not parse introspection response: {source}")]
+    ParseResponse { source: serde_json::Error },
+    #[error("could not decode base64 metadata: {source}")]
+    DecodeResponse { source: base64::DecodeError },
+    #[error("received error response from Zitadel: {source}")]
+    ResponseError { source: ZitadelResponseError },
+    #[error("Discovery error during introspection: {source}")]
+    DiscoveryError { source: DiscoveryError },
+    #[error("unsupported algorithm in JWT")]
+    JWTUnsupportedAlgorithm,
+    #[error("missing key in jwks")]
+    MissingJwksKey,
+    #[error("{}", match .source.kind() {
+        jsonwebtoken::errors::ErrorKind::InvalidToken => "Invalid JWT string, missing the 3 . segments, JKWS validation won't work with opaque tokens, make sure you've switched to JWT tokens or use instead the instropect method",
+        jsonwebtoken::errors::ErrorKind::InvalidAlgorithmName => "Invalid Algorithm in JWKS",
+        _ => "Other JWT error"
+    })]
+    JsonWebTokenErrors {
+        #[from]
+        source: jsonwebtoken::errors::Error,
+    },
 }
 
 /// Introspection response information that is returned by the ZITADEL

@@ -1,4 +1,3 @@
-use custom_error::custom_error;
 use openidconnect::{
     core::{
         CoreAuthDisplay, CoreClaimName, CoreClaimType, CoreClientAuthMethod, CoreGrantType,
@@ -9,12 +8,18 @@ use openidconnect::{
 };
 use serde::{Deserialize, Serialize};
 
-custom_error! {
-    /// Error type for discovery related errors.
-    pub DiscoveryError
-        IssuerUrl{source: url::ParseError} = "could not parse issuer url: {source}",
-        DiscoveryDocument = "could not discover OIDC document",
-        DiscoveryClientError{source: reqwest::Error} = "could not fetch discovery document: {source}",
+/// Error type for discovery related errors.
+#[derive(Debug, thiserror::Error)]
+pub enum DiscoveryError {
+    #[error("could not parse issuer url: {source}")]
+    IssuerUrl { source: url::ParseError },
+    #[error("could not discover OIDC document")]
+    DiscoveryDocument,
+    #[error("could not fetch discovery document: {source}")]
+    DiscoveryClientError {
+        #[from]
+        source: reqwest::Error,
+    },
 }
 
 /// Fetch the well-known [OIDC Discovery](https://openid.net/specs/openid-connect-discovery-1_0.html)

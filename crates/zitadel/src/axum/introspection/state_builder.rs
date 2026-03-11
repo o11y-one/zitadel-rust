@@ -1,4 +1,3 @@
-use custom_error::custom_error;
 use std::sync::Arc;
 
 use crate::axum::introspection::state::IntrospectionConfig;
@@ -11,12 +10,15 @@ use crate::oidc::introspection::cache::IntrospectionCache;
 
 use super::state::IntrospectionState;
 
-custom_error! {
-    /// Error type for introspection config builder related errors.
-    pub IntrospectionStateBuilderError
-        NoAuthSchema = "no authentication for authority defined",
-        Discovery{source: DiscoveryError} = "could not fetch discovery document: {source}",
-        NoIntrospectionUrl = "discovery document did not contain an introspection url",
+/// Error type for introspection config builder related errors.
+#[derive(Debug, thiserror::Error)]
+pub enum IntrospectionStateBuilderError {
+    #[error("no authentication for authority defined")]
+    NoAuthSchema,
+    #[error("could not fetch discovery document: {source}")]
+    Discovery { source: DiscoveryError },
+    #[error("discovery document did not contain an introspection url")]
+    NoIntrospectionUrl,
 }
 
 pub struct IntrospectionStateBuilder {

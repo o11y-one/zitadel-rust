@@ -1,4 +1,3 @@
-use custom_error::custom_error;
 use jsonwebtoken::{encode, Algorithm, EncodingKey, Header};
 use serde::{Deserialize, Serialize};
 use std::fs::read_to_string;
@@ -28,12 +27,18 @@ pub struct Application {
     key: String,
 }
 
-custom_error! {
-    /// Error type for application credential related errors.
-    pub ApplicationError
-        Io{source: std::io::Error} = "unable to read from file: {source}",
-        Json{source: serde_json::Error} = "could not parse json: {source}",
-        Key{source: jsonwebtoken::errors::Error} = "could not parse RSA key: {source}",
+/// Error type for application credential related errors.
+#[derive(Debug, thiserror::Error)]
+pub enum ApplicationError {
+    #[error("unable to read from file: {source}")]
+    Io { source: std::io::Error },
+    #[error("could not parse json: {source}")]
+    Json { source: serde_json::Error },
+    #[error("could not parse RSA key: {source}")]
+    Key {
+        #[from]
+        source: jsonwebtoken::errors::Error,
+    },
 }
 
 impl Application {

@@ -12,22 +12,28 @@ use axum::{
 use axum_extra::headers::authorization::Bearer;
 use axum_extra::headers::Authorization;
 use axum_extra::TypedHeader;
-use custom_error::custom_error;
 use openidconnect::TokenIntrospectionResponse;
 use serde_json::json;
 
 use crate::oidc::introspection::{introspect, IntrospectionError, ZitadelIntrospectionResponse};
 
-custom_error! {
-    /// Error type for guard related errors.
-    pub IntrospectionGuardError
-        MissingConfig = "no introspection config given to rocket managed state",
-        Unauthorized = "no HTTP authorization header found",
-        InvalidHeader = "authorization header is invalid",
-        WrongScheme = "Authorization header is not a bearer token",
-        Introspection{source: IntrospectionError} = "introspection returned an error: {source}",
-        Inactive = "access token is inactive",
-        NoUserId = "introspection result contained no user id",
+/// Error type for guard related errors.
+#[derive(Debug, thiserror::Error)]
+pub enum IntrospectionGuardError {
+    #[error("no introspection config found in application state")]
+    MissingConfig,
+    #[error("no HTTP authorization header found")]
+    Unauthorized,
+    #[error("authorization header is invalid")]
+    InvalidHeader,
+    #[error("Authorization header is not a bearer token")]
+    WrongScheme,
+    #[error("introspection returned an error: {source}")]
+    Introspection { source: IntrospectionError },
+    #[error("access token is inactive")]
+    Inactive,
+    #[error("introspection result contained no user id")]
+    NoUserId,
 }
 
 impl IntoResponse for IntrospectionGuardError {

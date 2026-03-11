@@ -5,7 +5,6 @@
 
 use std::error::Error;
 
-use custom_error::custom_error;
 use tonic::codegen::{Body, Bytes, InterceptedService, StdError};
 use tonic::service::Interceptor;
 
@@ -50,12 +49,15 @@ use crate::api::zitadel::webkey::v2::web_key_service_client::WebKeyServiceClient
 #[cfg(feature = "interceptors")]
 use crate::credentials::{AuthenticationOptions, ServiceAccount};
 
-custom_error! {
-    /// Errors that may occur when creating a client.
-    pub ClientError
-        InvalidUrl = "the provided url is invalid",
-        ConnectionError = "could not connect to provided endpoint",
-        TlsInitializationError = "could not setup tls connection",
+/// Errors that may occur when creating a client.
+#[derive(Debug, thiserror::Error)]
+pub enum ClientError {
+    #[error("the provided url is invalid")]
+    InvalidUrl,
+    #[error("could not connect to provided endpoint")]
+    ConnectionError,
+    #[error("could not setup tls connection")]
+    TlsInitializationError,
 }
 
 /// A builder to create configured gRPC clients for ZITADEL API access.

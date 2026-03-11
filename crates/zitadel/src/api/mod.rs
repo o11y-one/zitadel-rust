@@ -7,7 +7,7 @@
 
 pub mod clients;
 #[allow(clippy::all)]
-#[cfg(feature = "api")]
+#[cfg(feature = "api-common")]
 pub use zitadel_gen::zitadel;
 #[cfg(feature = "interceptors")]
 pub mod interceptors;
