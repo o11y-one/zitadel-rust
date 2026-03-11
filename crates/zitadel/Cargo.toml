@@ -18,9 +18,6 @@ include = [
 [features]
 default = ["tls-roots"]
 
-## Feature that enables support for the [actix framework](https://actix.rs/).
-actix = ["credentials", "oidc", "dep:actix-web"]
-
 api-common = ["dep:tonic", "dep:zitadel-gen"]
 
 ## The API feature enables all gRPC service clients to access the ZITADEL API.
@@ -84,18 +81,7 @@ introspection_cache = ["dep:async-trait", "dep:time", "dep:moka"]
 ## The OIDC features are required for some of the web framework features.
 oidc = ["credentials", "dep:base64-compat"]
 
-## Feature that enables support for the [rocket framework](https://rocket.rs/).
-## It enables authentication features for rocket in the form of route guards.
-## Refer to the rocket module for more information.
-rocket = ["credentials", "oidc", "dep:rocket"]
-
-## Feature that enables support for the [rocket okapi](https://github.com/GREsau/okapi).
-rocket_okapi = ["rocket", "dep:rocket_okapi", "dep:schemars"]
-
-
-
 [dependencies]
-actix-web = { version = "4.5.1", optional = true }
 async-trait = { version = "0.1.80", optional = true }
 axum = { version = "0.8.0", optional = true, features = ["macros"] }
 axum-extra = { version = "0.12.0", optional = true, features = ["typed-header"] } #0.11.0 is yanked
@@ -106,7 +92,6 @@ jsonwebtoken = { version = "9.3.0", optional = true }
 moka = { version = "0.12.8", features = ["future"], optional = true }
 openidconnect = { version = "4.0.0", optional = true }
 reqwest = { version = "0.12.12", features = ["json", "rustls-tls"], default-features = false, optional = true }
-rocket = { version = "0.5.0", optional = true }
 serde = { version = "1.0.200", features = ["derive"], optional = true }
 serde_json = { version = "1.0.116", optional = true }
 serde_urlencoded = { version = "0.7.1", optional = true }
@@ -118,8 +103,6 @@ tokio = { version = "1.37.0", optional = true, features = [
 tonic = { version = "0.14.2", features = [
   "tls-ring",
 ], optional = true }
-rocket_okapi = { version = "0.9.0", optional = true, default-features = false }
-schemars = {version = "0.8.21", optional = true}
 
 zitadel-gen = { path = "../zitadel-gen", version = "2.71",  optional = true }
 
@@ -132,11 +115,6 @@ http-body-util = "0.1.0"
 [package.metadata.docs.rs]
 all-features = true
 
-
-[[example]]
-name = "actix_webapi_oauth_interception_basic"
-required-features = ["actix"]
-path = "examples/actix_webapi_oauth_interception_basic.rs"
 
 [[example]]
 name = "axum_webapi_oauth_interception_basic"
@@ -152,21 +130,6 @@ path = "examples/fetch_profile_with_pat.rs"
 name = "fetch_profile_with_service_account"
 required-features = ["api", "interceptors"]
 path = "examples/fetch_profile_with_service_account.rs"
-
-[[example]]
-name = "rocket_webapi_oauth_interception_basic"
-required-features = ["rocket"]
-path = "examples/rocket_webapi_oauth_interception_basic.rs"
-
-[[example]]
-name = "rocket_webapi_oauth_interception_jwtprofile_cached"
-required-features = ["rocket", "introspection_cache"]
-path = "examples/rocket_webapi_oauth_interception_jwtprofile_cached.rs"
-
-[[example]]
-name = "rocket_webapi_oauth_interception_jwtprofile"
-required-features = ["rocket"]
-path = "examples/rocket_webapi_oauth_interception_jwtprofile.rs"
 
 [[example]]
 name = "service_account_authentication"

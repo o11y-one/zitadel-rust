@@ -35,8 +35,6 @@
     cfg_attr(doc, doc = ::document_features::document_features!())
 )]
 
-#[cfg(feature = "actix")]
-pub mod actix;
 #[cfg(feature = "api-common")]
 pub mod api;
 #[cfg(feature = "axum")]
@@ -45,5 +43,3 @@ pub mod axum;
 pub mod credentials;
 #[cfg(feature = "oidc")]
 pub mod oidc;
-#[cfg(feature = "rocket")]
-pub mod rocket;
