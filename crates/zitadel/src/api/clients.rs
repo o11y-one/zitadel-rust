@@ -34,6 +34,19 @@ use crate::api::zitadel::management::v1::management_service_client::ManagementSe
 #[cfg(feature = "api-system-v1")]
 use crate::api::zitadel::system::v1::system_service_client::SystemServiceClient;
 
+#[cfg(feature = "api-action-v2")]
+use crate::api::zitadel::action::v2::action_service_client::ActionServiceClient;
+#[cfg(feature = "api-application-v2")]
+use crate::api::zitadel::application::v2::application_service_client::ApplicationServiceClient;
+#[cfg(feature = "api-authorization-v2")]
+use crate::api::zitadel::authorization::v2::authorization_service_client::AuthorizationServiceClient;
+#[cfg(feature = "api-instance-v2")]
+use crate::api::zitadel::instance::v2::instance_service_client::InstanceServiceClient;
+#[cfg(feature = "api-project-v2")]
+use crate::api::zitadel::project::v2::project_service_client::ProjectServiceClient;
+#[cfg(feature = "api-webkey-v2")]
+use crate::api::zitadel::webkey::v2::web_key_service_client::WebKeyServiceClient;
+
 #[cfg(feature = "interceptors")]
 use crate::credentials::{AuthenticationOptions, ServiceAccount};
 
@@ -281,6 +294,106 @@ where
             .interceptor
             .build_service(get_channel(&self.api_endpoint).await?);
         Ok(UserServiceClient::new(channel))
+    }
+
+    /// Create a new [`ActionServiceClient`].
+    ///
+    /// ### Errors
+    ///
+    /// This function returns a [`ClientError`] if the provided API endpoint
+    /// cannot be parsed into a valid URL or if the connection to the endpoint
+    /// is not possible.
+    #[cfg(feature = "api-action-v2")]
+    pub async fn build_action_client(self) -> Result<ActionServiceClient<T::Target>, Box<dyn Error>> {
+        let channel = self
+            .interceptor
+            .build_service(get_channel(&self.api_endpoint).await?);
+        Ok(ActionServiceClient::new(channel))
+    }
+
+    /// Create a new [`ApplicationServiceClient`].
+    ///
+    /// ### Errors
+    ///
+    /// This function returns a [`ClientError`] if the provided API endpoint
+    /// cannot be parsed into a valid URL or if the connection to the endpoint
+    /// is not possible.
+    #[cfg(feature = "api-application-v2")]
+    pub async fn build_application_client(
+        self,
+    ) -> Result<ApplicationServiceClient<T::Target>, Box<dyn Error>> {
+        let channel = self
+            .interceptor
+            .build_service(get_channel(&self.api_endpoint).await?);
+        Ok(ApplicationServiceClient::new(channel))
+    }
+
+    /// Create a new [`AuthorizationServiceClient`].
+    ///
+    /// ### Errors
+    ///
+    /// This function returns a [`ClientError`] if the provided API endpoint
+    /// cannot be parsed into a valid URL or if the connection to the endpoint
+    /// is not possible.
+    #[cfg(feature = "api-authorization-v2")]
+    pub async fn build_authorization_client(
+        self,
+    ) -> Result<AuthorizationServiceClient<T::Target>, Box<dyn Error>> {
+        let channel = self
+            .interceptor
+            .build_service(get_channel(&self.api_endpoint).await?);
+        Ok(AuthorizationServiceClient::new(channel))
+    }
+
+    /// Create a new [`InstanceServiceClient`].
+    ///
+    /// ### Errors
+    ///
+    /// This function returns a [`ClientError`] if the provided API endpoint
+    /// cannot be parsed into a valid URL or if the connection to the endpoint
+    /// is not possible.
+    #[cfg(feature = "api-instance-v2")]
+    pub async fn build_instance_client(
+        self,
+    ) -> Result<InstanceServiceClient<T::Target>, Box<dyn Error>> {
+        let channel = self
+            .interceptor
+            .build_service(get_channel(&self.api_endpoint).await?);
+        Ok(InstanceServiceClient::new(channel))
+    }
+
+    /// Create a new [`ProjectServiceClient`].
+    ///
+    /// ### Errors
+    ///
+    /// This function returns a [`ClientError`] if the provided API endpoint
+    /// cannot be parsed into a valid URL or if the connection to the endpoint
+    /// is not possible.
+    #[cfg(feature = "api-project-v2")]
+    pub async fn build_project_client(
+        self,
+    ) -> Result<ProjectServiceClient<T::Target>, Box<dyn Error>> {
+        let channel = self
+            .interceptor
+            .build_service(get_channel(&self.api_endpoint).await?);
+        Ok(ProjectServiceClient::new(channel))
+    }
+
+    /// Create a new [`WebKeyServiceClient`].
+    ///
+    /// ### Errors
+    ///
+    /// This function returns a [`ClientError`] if the provided API endpoint
+    /// cannot be parsed into a valid URL or if the connection to the endpoint
+    /// is not possible.
+    #[cfg(feature = "api-webkey-v2")]
+    pub async fn build_web_key_client(
+        self,
+    ) -> Result<WebKeyServiceClient<T::Target>, Box<dyn Error>> {
+        let channel = self
+            .interceptor
+            .build_service(get_channel(&self.api_endpoint).await?);
+        Ok(WebKeyServiceClient::new(channel))
     }
 }
 
