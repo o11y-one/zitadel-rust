@@ -102,7 +102,7 @@ tokio = { version = "1.50.0", optional = true, features = [
 ] }
 tonic = { workspace = true, optional = true }
 
-zitadel-gen = { path = "../zitadel-gen", version = "2.71",  optional = true }
+zitadel-gen = { path = "../zitadel-gen", version = "4.12",  optional = true }
 
 [dev-dependencies]
 chrono = "0.4.38"
