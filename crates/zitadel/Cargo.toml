@@ -30,7 +30,13 @@ api = [
   "api-org-v2",
   "api-session-v2",
   "api-settings-v2",
-  "api-user-v2"
+  "api-user-v2",
+  "api-action-v2",
+  "api-application-v2",
+  "api-authorization-v2",
+  "api-instance-v2",
+  "api-project-v2",
+  "api-webkey-v2",
 ]
 ## The API feature enables all gRPC service clients to access the respective ZITADEL API.
 api-admin-v1 = ["api-common", "zitadel-gen/zitadel-admin-v1" ]
@@ -50,6 +56,18 @@ api-session-v2 = ["api-common", "zitadel-gen/zitadel-session-v2" ]
 api-settings-v2 = ["api-common", "zitadel-gen/zitadel-settings-v2" ]
 ## The API feature enables all gRPC service clients to access the respective ZITADEL API.
 api-user-v2 = ["api-common", "zitadel-gen/zitadel-user-v2" ]
+## The API feature enables all gRPC service clients to access the respective ZITADEL API.
+api-action-v2 = ["api-common", "zitadel-gen/zitadel-action-v2"]
+## The API feature enables all gRPC service clients to access the respective ZITADEL API.
+api-application-v2 = ["api-common", "zitadel-gen/zitadel-application-v2"]
+## The API feature enables all gRPC service clients to access the respective ZITADEL API.
+api-authorization-v2 = ["api-common", "zitadel-gen/zitadel-authorization-v2"]
+## The API feature enables all gRPC service clients to access the respective ZITADEL API.
+api-instance-v2 = ["api-common", "zitadel-gen/zitadel-instance-v2"]
+## The API feature enables all gRPC service clients to access the respective ZITADEL API.
+api-project-v2 = ["api-common", "zitadel-gen/zitadel-project-v2"]
+## The API feature enables all gRPC service clients to access the respective ZITADEL API.
+api-webkey-v2 = ["api-common", "zitadel-gen/zitadel-webkey-v2"]
 
 
 tls-roots = ["tonic/tls-native-roots"]
