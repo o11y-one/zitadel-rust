@@ -1,0 +1,268 @@
+// @generated
+/// Generated client implementations.
+pub mod authorization_service_client {
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
+    use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
+    #[derive(Debug, Clone)]
+    pub struct AuthorizationServiceClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl AuthorizationServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> AuthorizationServiceClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::Body>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> AuthorizationServiceClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::Body>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::Body>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::Body>,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
+        {
+            AuthorizationServiceClient::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
+            self
+        }
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
+            self
+        }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
+        pub async fn list_authorizations(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListAuthorizationsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListAuthorizationsResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.authorization.v2.AuthorizationService/ListAuthorizations",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.authorization.v2.AuthorizationService",
+                        "ListAuthorizations",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn create_authorization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::CreateAuthorizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::CreateAuthorizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.authorization.v2.AuthorizationService/CreateAuthorization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.authorization.v2.AuthorizationService",
+                        "CreateAuthorization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn update_authorization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UpdateAuthorizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::UpdateAuthorizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.authorization.v2.AuthorizationService/UpdateAuthorization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.authorization.v2.AuthorizationService",
+                        "UpdateAuthorization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn delete_authorization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteAuthorizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeleteAuthorizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.authorization.v2.AuthorizationService/DeleteAuthorization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.authorization.v2.AuthorizationService",
+                        "DeleteAuthorization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn activate_authorization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ActivateAuthorizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ActivateAuthorizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.authorization.v2.AuthorizationService/ActivateAuthorization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.authorization.v2.AuthorizationService",
+                        "ActivateAuthorization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn deactivate_authorization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeactivateAuthorizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeactivateAuthorizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.authorization.v2.AuthorizationService/DeactivateAuthorization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.authorization.v2.AuthorizationService",
+                        "DeactivateAuthorization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+    }
+}

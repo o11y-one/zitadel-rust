@@ -1,0 +1,502 @@
+// @generated
+/// Generated client implementations.
+pub mod organization_service_client {
+    #![allow(
+        unused_variables,
+        dead_code,
+        missing_docs,
+        clippy::wildcard_imports,
+        clippy::let_unit_value,
+    )]
+    use tonic::codegen::*;
+    use tonic::codegen::http::Uri;
+    #[derive(Debug, Clone)]
+    pub struct OrganizationServiceClient<T> {
+        inner: tonic::client::Grpc<T>,
+    }
+    impl OrganizationServiceClient<tonic::transport::Channel> {
+        /// Attempt to create a new client by connecting to a given endpoint.
+        pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
+        where
+            D: TryInto<tonic::transport::Endpoint>,
+            D::Error: Into<StdError>,
+        {
+            let conn = tonic::transport::Endpoint::new(dst)?.connect().await?;
+            Ok(Self::new(conn))
+        }
+    }
+    impl<T> OrganizationServiceClient<T>
+    where
+        T: tonic::client::GrpcService<tonic::body::Body>,
+        T::Error: Into<StdError>,
+        T::ResponseBody: Body<Data = Bytes> + std::marker::Send + 'static,
+        <T::ResponseBody as Body>::Error: Into<StdError> + std::marker::Send,
+    {
+        pub fn new(inner: T) -> Self {
+            let inner = tonic::client::Grpc::new(inner);
+            Self { inner }
+        }
+        pub fn with_origin(inner: T, origin: Uri) -> Self {
+            let inner = tonic::client::Grpc::with_origin(inner, origin);
+            Self { inner }
+        }
+        pub fn with_interceptor<F>(
+            inner: T,
+            interceptor: F,
+        ) -> OrganizationServiceClient<InterceptedService<T, F>>
+        where
+            F: tonic::service::Interceptor,
+            T::ResponseBody: Default,
+            T: tonic::codegen::Service<
+                http::Request<tonic::body::Body>,
+                Response = http::Response<
+                    <T as tonic::client::GrpcService<tonic::body::Body>>::ResponseBody,
+                >,
+            >,
+            <T as tonic::codegen::Service<
+                http::Request<tonic::body::Body>,
+            >>::Error: Into<StdError> + std::marker::Send + std::marker::Sync,
+        {
+            OrganizationServiceClient::new(InterceptedService::new(inner, interceptor))
+        }
+        /// Compress requests with the given encoding.
+        ///
+        /// This requires the server to support it otherwise it might respond with an
+        /// error.
+        #[must_use]
+        pub fn send_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.send_compressed(encoding);
+            self
+        }
+        /// Enable decompressing responses.
+        #[must_use]
+        pub fn accept_compressed(mut self, encoding: CompressionEncoding) -> Self {
+            self.inner = self.inner.accept_compressed(encoding);
+            self
+        }
+        /// Limits the maximum size of a decoded message.
+        ///
+        /// Default: `4MB`
+        #[must_use]
+        pub fn max_decoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_decoding_message_size(limit);
+            self
+        }
+        /// Limits the maximum size of an encoded message.
+        ///
+        /// Default: `usize::MAX`
+        #[must_use]
+        pub fn max_encoding_message_size(mut self, limit: usize) -> Self {
+            self.inner = self.inner.max_encoding_message_size(limit);
+            self
+        }
+        pub async fn create_organization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::CreateOrganizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::CreateOrganizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/CreateOrganization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "CreateOrganization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn update_organization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UpdateOrganizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::UpdateOrganizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/UpdateOrganization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "UpdateOrganization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn list_organizations(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListOrganizationsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListOrganizationsResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/ListOrganizations",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "ListOrganizations",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn delete_organization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteOrganizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeleteOrganizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/DeleteOrganization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "DeleteOrganization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn set_organization_metadata(
+            &mut self,
+            request: impl tonic::IntoRequest<super::SetOrganizationMetadataRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::SetOrganizationMetadataResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/SetOrganizationMetadata",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "SetOrganizationMetadata",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn list_organization_metadata(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListOrganizationMetadataRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListOrganizationMetadataResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/ListOrganizationMetadata",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "ListOrganizationMetadata",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn delete_organization_metadata(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteOrganizationMetadataRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeleteOrganizationMetadataResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/DeleteOrganizationMetadata",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "DeleteOrganizationMetadata",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn add_organization_domain(
+            &mut self,
+            request: impl tonic::IntoRequest<super::AddOrganizationDomainRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::AddOrganizationDomainResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/AddOrganizationDomain",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "AddOrganizationDomain",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn list_organization_domains(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ListOrganizationDomainsRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ListOrganizationDomainsResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/ListOrganizationDomains",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "ListOrganizationDomains",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn delete_organization_domain(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeleteOrganizationDomainRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeleteOrganizationDomainResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/DeleteOrganizationDomain",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "DeleteOrganizationDomain",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn generate_organization_domain_validation(
+            &mut self,
+            request: impl tonic::IntoRequest<
+                super::GenerateOrganizationDomainValidationRequest,
+            >,
+        ) -> std::result::Result<
+            tonic::Response<super::GenerateOrganizationDomainValidationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/GenerateOrganizationDomainValidation",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "GenerateOrganizationDomainValidation",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn verify_organization_domain(
+            &mut self,
+            request: impl tonic::IntoRequest<super::VerifyOrganizationDomainRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::VerifyOrganizationDomainResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/VerifyOrganizationDomain",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "VerifyOrganizationDomain",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn deactivate_organization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::DeactivateOrganizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::DeactivateOrganizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/DeactivateOrganization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "DeactivateOrganization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn activate_organization(
+            &mut self,
+            request: impl tonic::IntoRequest<super::ActivateOrganizationRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::ActivateOrganizationResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::unknown(
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic_prost::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/zitadel.org.v2beta.OrganizationService/ActivateOrganization",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new(
+                        "zitadel.org.v2beta.OrganizationService",
+                        "ActivateOrganization",
+                    ),
+                );
+            self.inner.unary(req, path, codec).await
+        }
+    }
+}
